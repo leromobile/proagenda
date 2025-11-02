@@ -1,0 +1,28 @@
+# ProAgenda - Configurações Apache
+
+RewriteEngine On
+
+# Segurança
+<Files "config.php">
+    Deny from all
+</Files>
+
+<FilesMatch "\.(log|sql|env)$">
+    Deny from all
+</FilesMatch>
+
+# URLs amigáveis
+RewriteRule ^$ public/index.php [L]
+RewriteRule ^agendar/?$ public/agendar.php [L]
+RewriteRule ^admin/?$ admin/index.php [L]
+RewriteRule ^install/?$ install/index.php [L]
+
+# Headers de segurança
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-XSS-Protection "1; mode=block"
+
+# Cache
+ExpiresActive On
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
